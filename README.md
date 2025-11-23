@@ -1,2 +1,2 @@
-# leetcode
-Leet code challenges
+# readme
+Leet code challenges in go + rust, enjoy!
