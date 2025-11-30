@@ -44,3 +44,21 @@ func TwoSum(nums []int, target int) []int {
 	}
 	return []int{}	// return empty slice if no solution found, needed to satisfy compiler
 }
+
+// order of this solution is O(n^2)
+
+// optimization to O(n) -> iterates over nums just one time
+
+func TwoSumOptimized(nums []int, target int) []int {
+	m := make(map[int]int)
+
+	for i, v := range nums {
+		diff := target - v
+		if idx, found := m[diff]; found {
+			return []int{i, idx} // found!
+		}
+
+		m[v] = i // we save the value with the current index
+	}
+	return []int{}
+}
