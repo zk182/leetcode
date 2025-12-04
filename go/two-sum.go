@@ -32,7 +32,7 @@ Only one valid answer exists.
 Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
 */
 
-package two_sum
+package problems
 
 func TwoSum(nums []int, target int) []int {
 	for i:= 0; i < len(nums); i++ {
