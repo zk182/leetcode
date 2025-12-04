@@ -45,6 +45,8 @@ const isAnagram = function(s, t) {
  * @param {string} t
  * @return {boolean}
  */
+
+// 17 ms
 const isAnagramOptimized = function(s, t) {
     if (s.length !== t.length) {
         return false;
