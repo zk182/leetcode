@@ -11,7 +11,7 @@ const containsDuplicate = function(nums) {
 
     let hash = {};
     let i = 0;
-    for (n of nums){
+    for (let n of nums){
         if (hash[n]) {
             return true;
         }
@@ -19,4 +19,15 @@ const containsDuplicate = function(nums) {
         i++;
     }
     return false;
+};
+
+// optimized
+
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+const containsDuplicateOpt = function(nums) {
+    let s = new Set(nums);
+    return s.size !== nums.length;
 };
