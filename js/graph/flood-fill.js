@@ -14,8 +14,6 @@ const dirs = [
  */
 const floodFill = function(image, sr, sc, color) {
     const originalColor = image[sr][sc];
-    const rows = image.length;
-    const cols = image[0].length;
 
     if (color === originalColor) {
         return image;
@@ -33,7 +31,7 @@ const floodFill = function(image, sr, sc, color) {
 
 function adjustAdjacents(image, points, color, originalColor) {
     const [sr, sc] = points.pop();
-    for ([dr, dc] of dirs) { // voy uno a uno en las posibles nuevas dirs
+    for (const [dr, dc] of dirs) { // voy uno a uno en las posibles nuevas dirs
         const nr = dr + sr; //newrow
         const nc = dc + sc; //newcolumn
 
