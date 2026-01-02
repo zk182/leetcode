@@ -1,4 +1,4 @@
-const { minExecutionTime } = require('./mem-consuption');
+const { optimizedMinExecutionTime } = require('./mem-consuption');
 
 describe('minExecutionTime', () => {
 	test('Edge case 1: una sola tarea', () => {
@@ -7,7 +7,7 @@ describe('minExecutionTime', () => {
 		const maxMemory = 10;
 
 		// Una sola tarea siempre requiere 1 unidad
-		expect(minExecutionTime(tasks, maxMemory)).toBe(1);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(1);
 	});
 
 	test('Edge case 2: memoria exacta al límite', () => {
@@ -22,7 +22,7 @@ describe('minExecutionTime', () => {
 		// [5] -> 1 tarea
 		// [3,2] -> 2 tareas (límite de paralelismo)
 		// Total: 2
-		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(2);
 	});
 
 	test('Edge case 3: cada tarea es de un tipo distinto', () => {
@@ -36,7 +36,7 @@ describe('minExecutionTime', () => {
 		const maxMemory = 10;
 
 		// No se pueden mezclar tipos, todas van en tiempos distintos
-		expect(minExecutionTime(tasks, maxMemory)).toBe(4);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(4);
 	});
 
 	test('Edge case 4: muchas tareas pequeñas del mismo tipo', () => {
@@ -51,7 +51,7 @@ describe('minExecutionTime', () => {
 		const maxMemory = 3;
 
 		// Límite de paralelismo: 2 tareas → 2 + 2 + 1
-		expect(minExecutionTime(tasks, maxMemory)).toBe(3);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(3);
 	});
 	test('Caso 5: tareas del mismo tipo se pueden paralelizar', () => {
 		const tasks = [
@@ -65,7 +65,7 @@ describe('minExecutionTime', () => {
 		// type 1: [2,4] -> juntas en 1 unidad
 		// type 2: [5]   -> 1 unidad
 		// Total: 2
-		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(2);
 	});
 
 	test('Caso 6: mismo tipo pero la memoria obliga a dividir en varios tiempos', () => {
@@ -79,7 +79,7 @@ describe('minExecutionTime', () => {
 
 		// No pueden ir más de una por vez (3 + 3 > 5)
 		// type 1: 3 tareas -> 3 unidades
-		expect(minExecutionTime(tasks, maxMemory)).toBe(3);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(3);
 	});
 
 	test('Caso 7: múltiples tipos con packing no trivial', () => {
@@ -95,7 +95,7 @@ describe('minExecutionTime', () => {
 
 		// type 1: 2 tareas + 1 tarea → 2 unidades
 		// type 2: 1 tarea + 1 tarea → 2 unidades
-		expect(minExecutionTime(tasks, maxMemory)).toBe(4);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(4);
 	});
 
 	test('Caso 8: packing óptimo requiere ordenar tareas, bin packing', () => {
@@ -112,6 +112,6 @@ describe('minExecutionTime', () => {
 		// [3,1] -> 1 unidad
 		// [2,1] -> 1 unidad
 		// Total: 2
-		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
+		expect(optimizedMinExecutionTime(tasks, maxMemory)).toBe(2);
 	});
 });

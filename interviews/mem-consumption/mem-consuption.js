@@ -78,9 +78,7 @@ const optimizedMinExecutionTime = (tasks, maxMemory) => {
 	const map = new Map();
 
 	for (const { memory, type } of tasks) {
-		if (!map.has(type)) {
-			map.set(type, []);
-		}
+		if (!map.has(type)) map.set(type, []);
 		map.get(type).push(memory);
 	}
 
@@ -89,7 +87,31 @@ const optimizedMinExecutionTime = (tasks, maxMemory) => {
 
 		let usedMemory = 0;
 		let usedSlots = 0;
+
+		for (const m of memories) {
+			if (m > maxMemory) {
+				throw new Error('Task exceeds max memory');
+			}
+
+			const fitsMemory = usedMemory + m <= maxMemory;
+			const fitsSlots = usedSlots < 2;
+
+			if (fitsMemory && fitsSlots) {
+				usedMemory += m;
+				usedSlots++;
+			} else {
+				times++;
+				usedMemory = m;
+				usedSlots = 1;
+			}
+		}
+
+		if (usedSlots > 0) {
+			times++;
+		}
 	}
+
+	return times;
 };
 
 module.exports = { minExecutionTime, optimizedMinExecutionTime };
