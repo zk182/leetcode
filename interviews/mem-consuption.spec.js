@@ -53,7 +53,7 @@ describe('minExecutionTime', () => {
 		// Se pueden ejecutar 3 en paralelo y luego 2
 		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
 	});
-	test('Caso 1: tareas del mismo tipo se pueden paralelizar', () => {
+	test('Caso 5: tareas del mismo tipo se pueden paralelizar', () => {
 		const tasks = [
 			{ memory: 2, type: 1 },
 			{ memory: 4, type: 1 },
@@ -68,7 +68,7 @@ describe('minExecutionTime', () => {
 		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
 	});
 
-	test('Caso 2: mismo tipo pero la memoria obliga a dividir en varios tiempos', () => {
+	test('Caso 6: mismo tipo pero la memoria obliga a dividir en varios tiempos', () => {
 		const tasks = [
 			{ memory: 3, type: 1 },
 			{ memory: 3, type: 1 },
@@ -82,7 +82,7 @@ describe('minExecutionTime', () => {
 		expect(minExecutionTime(tasks, maxMemory)).toBe(3);
 	});
 
-	test('Caso 3: múltiples tipos con packing no trivial', () => {
+	test('Caso 7: múltiples tipos con packing no trivial', () => {
 		const tasks = [
 			{ memory: 2, type: 1 },
 			{ memory: 2, type: 1 },
