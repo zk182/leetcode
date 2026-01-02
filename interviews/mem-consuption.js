@@ -8,7 +8,10 @@
 // Reglas de ejecución
 // El tiempo está dividido en unidades discretas 1, 2, ..., k.
 // Cada tarea requiere exactamente una unidad de tiempo para ejecutarse.
-// En una misma unidad de tiempo pueden ejecutarse múltiples tareas en paralelo, siempre que:
+// En una misma unidad de tiempo pueden ejecutarse como máximo dos tareas en paralelo,
+// siempre que:
+// - Todas las tareas pertenezcan al mismo tipo.
+// - La suma de sus consumos de memoria no exceda M.
 
 // Todas las tareas pertenezcan al mismo tipo
 // La suma de sus consumos de memoria no exceda maxMemory
@@ -19,22 +22,10 @@
 // Determinar el número mínimo de unidades de tiempo k necesarias para ejecutar todas las tareas respetando las reglas anteriores.
 
 // Tests
-// Para correr los tests hacer
+// npm run test
 
 const minExecutionTime = (tasks, maxMemory) => {
-	// const tasks = [
-	//   { memory: 2, type: 1 },
-	//   { memory: 4, type: 1 },
-	//   { memory: 5, type: 2 }
-	// ];
-
-	// const maxMemory = 6;
-
-	// type 1: [2,4] -> juntas en 1 unidad
-	// type 2: [5]   -> 1 unidad
-	// Total: 2
-
-	const times = 0;
+	let times = 0;
 	let map = new Map();
 
 	for (const task of tasks) {
@@ -43,14 +34,43 @@ const minExecutionTime = (tasks, maxMemory) => {
 		map.set(type, v ? [...v, memory] : [memory]);
 	}
 
-	for (const [key, value] of map) {
-		const v = value.sort((a, b) => b - a); // ordenados descendente
+	for (const [, value] of map) {
+		const v = value.sort((a, b) => b - a);
 
-		// aca debería primero
-		// chequear no pasarme de maxMemory con un count
-		// cuando me paso de parallels o count > maxMemory => time ++ , lo que pase primero
+		let left = maxMemory;
+		let slots = [];
+		let usedSlots = 0;
+		for (const t of v) {
+			// 2->left = 1, times = 0, slots = 1
+			// 2->left se pasa, reseto y queda en 2, times = 1, slots = 1
+			// 1->left = 0, times = 2, slots = 2
+			if (left === 0) {
+				left = maxMemory;
+				if (usedSlots) {
+					times++;
+					usedSlots++;
+				}
+			}
+
+			if (left >= t) {
+				left -= t;
+				usedSlots++;
+			} else {
+				left = maxMemory - t;
+				times++;
+				usedSlots = 1;
+			}
+
+			// check paralells
+			if (usedSlots === 2) {
+				usedSlots = 0;
+				times++;
+			}
+		}
+		if (usedSlots) {
+			times++;
+		}
 	}
-
 	return times;
 };
 
