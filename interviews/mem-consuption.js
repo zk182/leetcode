@@ -19,10 +19,39 @@
 // Determinar el número mínimo de unidades de tiempo k necesarias para ejecutar todas las tareas respetando las reglas anteriores.
 
 // Tests
-// Para correr los tests hacer 
+// Para correr los tests hacer
 
 const minExecutionTime = (tasks, maxMemory) => {
-  return 2;
+	// const tasks = [
+	//   { memory: 2, type: 1 },
+	//   { memory: 4, type: 1 },
+	//   { memory: 5, type: 2 }
+	// ];
+
+	// const maxMemory = 6;
+
+	// type 1: [2,4] -> juntas en 1 unidad
+	// type 2: [5]   -> 1 unidad
+	// Total: 2
+
+	const times = 0;
+	let map = new Map();
+
+	for (const task of tasks) {
+		const { memory, type } = task;
+		let v = map.get(type);
+		map.set(type, v ? [...v, memory] : [memory]);
+	}
+
+	for (const [key, value] of map) {
+		const v = value.sort((a, b) => b - a); // ordenados descendente
+
+		// aca debería primero
+		// chequear no pasarme de maxMemory con un count
+		// cuando me paso de parallels o count > maxMemory => time ++ , lo que pase primero
+	}
+
+	return times;
 };
 
 module.exports = { minExecutionTime };
