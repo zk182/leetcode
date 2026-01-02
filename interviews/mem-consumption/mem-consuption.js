@@ -40,9 +40,6 @@ const minExecutionTime = (tasks, maxMemory) => {
 		let left = maxMemory;
 		let usedSlots = 0;
 		for (const t of v) {
-			// 2->left = 1, times = 0, slots = 1
-			// 2->left se pasa, reseto y queda en 2, times = 1, slots = 1
-			// 1->left = 0, times = 2, slots = 2
 			if (left === 0) {
 				left = maxMemory;
 				if (usedSlots) {
