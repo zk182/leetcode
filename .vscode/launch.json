@@ -1,0 +1,16 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Jest mem-consuption",
+			"runtimeExecutable": "/Users/nicobati/.nvm/versions/node/v18.20.8/bin/node",
+			"program": "${workspaceFolder}/interviews/node_modules/.bin/jest",
+			"args": ["mem-consuption.spec.js", "--runInBand"],
+			"cwd": "${workspaceFolder}/interviews",
+			"console": "integratedTerminal",
+			"skipFiles": ["<node_internals>/**"]
+		}
+	]
+}
