@@ -38,7 +38,6 @@ const minExecutionTime = (tasks, maxMemory) => {
 		const v = value.sort((a, b) => b - a);
 
 		let left = maxMemory;
-		let slots = [];
 		let usedSlots = 0;
 		for (const t of v) {
 			// 2->left = 1, times = 0, slots = 1
