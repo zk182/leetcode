@@ -19,8 +19,8 @@ describe('minExecutionTime', () => {
 
 		const maxMemory = 5;
 
-		// [5] -> 1 unidad
-		// [3,2] -> 1 unidad
+		// [5] -> 1 tarea
+		// [3,2] -> 2 tareas (límite de paralelismo)
 		// Total: 2
 		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
 	});
@@ -50,8 +50,8 @@ describe('minExecutionTime', () => {
 
 		const maxMemory = 3;
 
-		// Se pueden ejecutar 3 en paralelo y luego 2
-		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
+		// Límite de paralelismo: 2 tareas → 2 + 2 + 1
+		expect(minExecutionTime(tasks, maxMemory)).toBe(3);
 	});
 	test('Caso 5: tareas del mismo tipo se pueden paralelizar', () => {
 		const tasks = [
@@ -93,9 +93,25 @@ describe('minExecutionTime', () => {
 
 		const maxMemory = 4;
 
-		// type 1: [2,2] -> 1 unidad, [1] -> 1 unidad => 2
-		// type 2: [4] -> 1 unidad, [1] -> 1 unidad => 2
-		// Total: 4
+		// type 1: 2 tareas + 1 tarea → 2 unidades
+		// type 2: 1 tarea + 1 tarea → 2 unidades
 		expect(minExecutionTime(tasks, maxMemory)).toBe(4);
+	});
+
+	test('Caso 8: packing óptimo requiere ordenar tareas, bin packing', () => {
+		const tasks = [
+			{ memory: 3, type: 1 },
+			{ memory: 1, type: 1 },
+			{ memory: 2, type: 1 },
+			{ memory: 1, type: 1 }
+		];
+
+		const maxMemory = 4;
+
+		// Ordenando bien:
+		// [3,1] -> 1 unidad
+		// [2,1] -> 1 unidad
+		// Total: 2
+		expect(minExecutionTime(tasks, maxMemory)).toBe(2);
 	});
 });
