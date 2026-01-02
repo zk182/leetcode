@@ -73,4 +73,23 @@ const minExecutionTime = (tasks, maxMemory) => {
 	return times;
 };
 
-module.exports = { minExecutionTime };
+const optimizedMinExecutionTime = (tasks, maxMemory) => {
+	let times = 0;
+	const map = new Map();
+
+	for (const { memory, type } of tasks) {
+		if (!map.has(type)) {
+			map.set(type, []);
+		}
+		map.get(type).push(memory);
+	}
+
+	for (const memories of map.values()) {
+		memories.sort((a, b) => b - a);
+
+		let usedMemory = 0;
+		let usedSlots = 0;
+	}
+};
+
+module.exports = { minExecutionTime, optimizedMinExecutionTime };
