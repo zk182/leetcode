@@ -35,7 +35,7 @@ Follow-up: Can you come up with an algorithm that is less than O(n2) time comple
 package problems
 
 func TwoSum(nums []int, target int) []int {
-	for i:= 0; i < len(nums); i++ {
+	for i:= range nums {
 		for j:= i + 1; j < len(nums); j++ {
 			if nums[i] + nums[j] == target {
 				return []int{i, j}
